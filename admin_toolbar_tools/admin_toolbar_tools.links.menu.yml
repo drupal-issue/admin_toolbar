@@ -1,0 +1,54 @@
+admin_toolbar_tools.help:
+  title: Tools
+  description: Admin toolbar tools
+  route_name: admin_toolbar_tools.help
+  weight: -15
+  parent: system.admin
+system.admin_index:
+  title: Index
+  description: Admin toolbar tools
+  weight: -10
+  route_name: system.admin_index
+  parent: admin_toolbar_tools.help
+admin_toolbar_tools.flush:
+  title: Flush all caches
+  route_name: admin_toolbar_tools.flush
+  weight: -9
+  parent: admin_toolbar_tools.help
+admin_toolbar_tools.cssjs:
+  title: CSS and Javascript
+  route_name: admin_toolbar_tools.cssjs
+  parent: admin_toolbar_tools.flush
+admin_toolbar_tools.plugin:
+  title: Plugins
+  route_name: admin_toolbar_tools.plugin
+  parent: admin_toolbar_tools.flush
+admin_toolbar_tools.flush_static:
+  title: Static caches
+  route_name: admin_toolbar_tools.flush_static
+  parent: admin_toolbar_tools.flush
+system.run_cron:
+  title: Run cron
+  weight: -8
+  route_name: system.run_cron
+  parent: admin_toolbar_tools.help
+system.db_update:
+  title: Run Updates
+  weight: -7
+  route_name: system.db_update
+  parent: admin_toolbar_tools.help
+admin_toolbar_tools.drupalorg:
+  title: Drupal.org
+  weight: -6
+  route_name: admin_toolbar_tools.drupalorg
+  parent: admin_toolbar_tools.help
+admin_toolbar_tools.listchanges:
+  title: List changes D8
+  weight: -6
+  route_name: admin_toolbar_tools.listchanges
+  parent: admin_toolbar_tools.drupalorg
+admin_toolbar_tools.doc:
+  title: Documentation D8
+  weight: -5
+  route_name: admin_toolbar_tools.doc
+  parent: admin_toolbar_tools.drupalorg

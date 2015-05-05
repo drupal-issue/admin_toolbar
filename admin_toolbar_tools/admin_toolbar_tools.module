@@ -1,0 +1,37 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+
+// add css and icon in toolbar
+/**
+ * Implements hook_toolbar().
+ */
+function admin_toolbar_tools_toolbar() {
+  $items = array();
+  $items['admin_toolbar_tools'] = array(
+    '#type' => 'toolbar_item',
+    '#attributes' => array(
+      'class' => array('toolbar-icon', 'toolbar-icon-admin-toolbar-tools-help'),
+    ),
+    '#attached' => array(
+      'library' => array(
+        'admin_toolbar_tools/toolbar.icon',
+      ),
+    ),
+  );
+  return $items;
+}
+
+/**
+ *  Implements hook_help().
+ */
+function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.admin_toolbar_tools':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Admin Toolbar Tools module allows you to to add more fonctionalities to the toolbar like flush caches, runnig cron.') . '</p>';
+      return $output;
+  }
+}
