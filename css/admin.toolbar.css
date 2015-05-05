@@ -1,0 +1,43 @@
+/*---------------------- menu horizontal hover---------*/
+.menu-item:hover {
+    background: #a6d6f4;
+}
+.menu-item--expanded .menu {
+    background: #e8e8e0;
+    width: auto;
+    height: auto;
+}
+.menu-item--expanded {
+    background: #edfaab;
+}
+.toolbar-tray-horizontal ul li.menu-item--expanded:hover ul {
+    display: block;
+    position: absolute;
+    width: 180px;
+}
+.toolbar-tray-horizontal ul li.menu-item--expanded .menu-item ul {
+    display: none;
+}
+.toolbar-tray-horizontal ul li.menu-item--expanded .menu-item:hover ul {
+    display: block;
+    margin: -39.5px 0 0 178px;
+}
+.toolbar-tray-horizontal li:hover ul,
+.toolbar-tray-horizontal li li:hover ul,
+.toolbar-tray-horizontal li li li:hover ul,
+.toolbar-tray-horizontal li li li li:hover ul,
+.toolbar-tray-horizontal li li li li li:hover ul {
+    display: block;
+    left: auto;
+    top: auto;
+}
+.toolbar-tray-horizontal li:hover ul li {
+    float: none;
+}
+.toolbar-tray-horizontal .toolbar .level-2 > ul {
+    position: absolute;
+    padding-top: 0;
+    top: 0;
+    left: 160px;
+    width: 160px;
+}
