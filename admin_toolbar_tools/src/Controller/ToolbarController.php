@@ -18,8 +18,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class ToolbarController extends ControllerBase {
 
-
-  //This function display the tools in the menu.Aniso1020
+  //This function display the tools in the menu
 
   public function home() {
     return new RedirectResponse('/');
