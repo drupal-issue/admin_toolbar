@@ -18,16 +18,20 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class ToolbarController extends ControllerBase {
 
-  //This function display the tools in the menu.
+
+  //This function display the tools in the menu.Aniso1020
+
   public function home() {
     return new RedirectResponse('/');
   }
-
-  //This function flush all caches.
+  public function reload_page(){
+    $request = \Drupal::request();
+    return $request->server->get('HTTP_REFERER');
+  }
   public function flushAll() {
     drupal_flush_all_caches();
     drupal_set_message(t('All cache cleared.'));
-    return new RedirectResponse('/');
+    return new RedirectResponse($this->reload_page());
   }
 
   //This function flush css and javascript caches.
@@ -35,22 +39,21 @@ class ToolbarController extends ControllerBase {
     \Drupal::state()
       ->set('system.css_js_query_string', base_convert(REQUEST_TIME, 10, 36));
     drupal_set_message(t('CSS and JavaScript cache cleared.'));
-    return new RedirectResponse('/');
+    return new RedirectResponse($this->reload_page());
   }
-
   //This function flush plugins caches.
   public function flush_plugins() {
     // Clear all plugin caches.
     \Drupal::service('plugin.cache_clearer')->clearCachedDefinitions();
     drupal_set_message(t('Plugin cache cleared.'));
-    return new RedirectResponse('/');
+    return new RedirectResponse($this->reload_page());
   }
 
   // Reset all static caches.
   public function flush_static() {
     drupal_static_reset();
     drupal_set_message(t('All static caches cleared.'));
-    return new RedirectResponse('/');
+    return new RedirectResponse($this->reload_page());
   }
 
 // this function allow to access in documentation via admin_toolbar module
