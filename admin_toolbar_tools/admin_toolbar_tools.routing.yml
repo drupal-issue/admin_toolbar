@@ -54,3 +54,10 @@ admin_toolbar_tools.doc:
     _title: 'Documentation D8'
   requirements:
     _permission: 'access administration pages'
+admin_development:
+  path: '/admin/development'
+  defaults:
+    _controller: '\Drupal\admin_toolbar_tools\Controller\ToolbarController::development'
+    _title: 'Development'
+  requirements:
+    _permission: 'access administration pages'

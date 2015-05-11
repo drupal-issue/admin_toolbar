@@ -47,7 +47,6 @@ class ToolbarController extends ControllerBase {
     drupal_set_message(t('Plugin cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
-
   // Reset all static caches.
   public function flush_static() {
     drupal_static_reset();
@@ -75,5 +74,9 @@ class ToolbarController extends ControllerBase {
     $response->send();
     return $response;
   }
+  //This function display the administration link Development
+  public function development(){
+    return new RedirectResponse('/admin/structure/menu/');
+}
 
 }

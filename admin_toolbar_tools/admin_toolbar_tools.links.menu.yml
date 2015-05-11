@@ -34,12 +34,12 @@ system.run_cron:
   parent: admin_toolbar_tools.help
 system.db_update:
   title: Run Updates
-  weight: -7
+  weight: -6
   route_name: system.db_update
   parent: admin_toolbar_tools.help
 admin_toolbar_tools.drupalorg:
   title: Drupal.org
-  weight: -6
+  weight: -5
   route_name: admin_toolbar_tools.drupalorg
   parent: admin_toolbar_tools.help
 admin_toolbar_tools.listchanges:
@@ -52,3 +52,8 @@ admin_toolbar_tools.doc:
   weight: -5
   route_name: admin_toolbar_tools.doc
   parent: admin_toolbar_tools.drupalorg
+admin_development:
+  title: Development
+  weight: -8
+  route_name: admin_development
+  parent: admin_toolbar_tools.help

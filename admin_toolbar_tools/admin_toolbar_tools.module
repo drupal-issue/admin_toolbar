@@ -35,3 +35,76 @@ function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match)
       return $output;
   }
 }
+
+/**
+ *  Implements hook_menu_links_discovered_alter().
+ */
+function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
+  if (\Drupal::moduleHandler()->moduleExists('devel')) {
+    $links['devel.admin_settings'] = array(
+      'title' => 'Devel settings',
+      'route_name' => 'devel.admin_settings',
+      'parent' => 'admin_development'
+    );
+    $links['devel.configs_list'] = array(
+      'title' => 'Config editor',
+      'route_name' => 'devel.configs_list',
+      'parent' => 'admin_development'
+    );
+    $links['devel.reinstall'] = array(
+      'title' => 'Reinstall Modules',
+      'route_name' => 'devel.reinstall',
+      'parent' => 'admin_development'
+    );
+    $links['devel.menu_rebuild'] = array(
+      'title' => 'Rebuild Menu',
+      'route_name' => 'devel.menu_rebuild',
+      'parent' => 'admin_development'
+    );
+    $links['devel.state_system_page'] = array(
+      'title' => 'State editor',
+      'route_name' => 'devel.state_system_page',
+      'parent' => 'admin_development'
+    );
+    $links['devel.theme_registry'] = array(
+      'title' => 'Theme registry',
+      'route_name' => 'devel.theme_registry',
+      'parent' => 'admin_development'
+    );
+    $links['devel.entity_info_page'] = array(
+      'title' => 'Entity Info',
+      'route_name' => 'devel.entity_info_page',
+      'parent' => 'admin_development'
+    );
+    $links['devel.execute_php'] = array(
+      'title' => 'Execute PHP',
+      'route_name' => 'devel.execute_php',
+      'parent' => 'admin_development'
+    );
+    $links['devel.session'] = array(
+      'title' => 'View Session',
+      'route_name' => 'devel.session',
+      'parent' => 'admin_development'
+    );
+    $links['devel.elements_page'] = array(
+      'title' => 'Hook_elements',
+      'route_name' => 'devel.elements_page',
+      'parent' => 'admin_development'
+    );
+    $links['devel.cache_clear'] = array(
+      'title' => 'Cache clear',
+      'route_name' => 'devel.cache_clear',
+      'parent' => 'admin_development'
+    );
+    $links['devel.run_cron'] = array(
+      'title' => 'Run cron',
+      'route_name' => 'devel.run_cron',
+      'parent' => 'admin_development'
+    );
+  }
+  $links['node.add_page']['parent'] = 'system.admin_content';
+  return $links;
+
+
+}
+
