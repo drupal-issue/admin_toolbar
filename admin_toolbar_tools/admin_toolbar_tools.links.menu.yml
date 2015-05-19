@@ -27,6 +27,10 @@ admin_toolbar_tools.flush_static:
   title: Static caches
   route_name: admin_toolbar_tools.flush_static
   parent: admin_toolbar_tools.flush
+admin_toolbar_tools.flush_menu:
+  title: Menu
+  route_name: admin_toolbar_tools.flush_menu
+  parent: admin_toolbar_tools.flush
 system.run_cron:
   title: Run cron
   weight: -8
@@ -34,12 +38,12 @@ system.run_cron:
   parent: admin_toolbar_tools.help
 system.db_update:
   title: Run Updates
-  weight: -7
+  weight: -6
   route_name: system.db_update
   parent: admin_toolbar_tools.help
 admin_toolbar_tools.drupalorg:
   title: Drupal.org
-  weight: -6
+  weight: -5
   route_name: admin_toolbar_tools.drupalorg
   parent: admin_toolbar_tools.help
 admin_toolbar_tools.listchanges:
@@ -52,3 +56,96 @@ admin_toolbar_tools.doc:
   weight: -5
   route_name: admin_toolbar_tools.doc
   parent: admin_toolbar_tools.drupalorg
+admin_development:
+  title: Development
+  weight: -8
+  route_name: admin_development
+  parent: admin_toolbar_tools.help
+update.module_update:
+  title: Update
+  route_name: update.module_update
+  parent: system.modules_list
+  weight: -1
+system.modules_uninstall:
+  title: Uninstall
+  route_name: system.modules_uninstall
+  parent: system.modules_list
+  weight: -2
+update.module_install:
+  title: Install new module
+  route_name: update.module_install
+  parent: system.modules_list
+  weight: -3
+#add menu to people
+user.admin_create:
+  title: Add user
+  route_name: user.admin_create
+  parent: entity.user.collection
+  weight: -5
+user.admin_permissions:
+  title: Permissions
+  route_name: user.admin_permissions
+  parent: entity.user.collection
+  weight: -4
+user.admin_create:
+  title: Add user
+  route_name: user.admin_create
+  parent: entity.user.collection
+  weight: -3
+entity.user_role.collection:
+  title: Roles
+  route_name: entity.user_role.collection
+  parent: entity.user.collection
+  weight: -2
+node.add_page:
+  parent: system.admin_content
+node.type_add:
+  title: Add content type
+  route_name: node.type_add
+  parent: entity.node_type.collection
+  weight: -5
+entity.taxonomy_vocabulary.add_form:
+  title: Add vocabulary
+  route_name: entity.taxonomy_vocabulary.add_form
+  parent: entity.taxonomy_vocabulary.collection
+  weight: -5
+entity.comment_type.add_form:
+  title: Add comment type
+  route_name: entity.comment_type.add_form
+  parent: entity.comment_type.collection
+  weight: -5
+entity.menu.add_form:
+  title: Add menu
+  route_name: entity.menu.add_form
+  parent: entity.menu.collection
+  weight: -50
+block_content.add_page:
+  title: Add custom block
+  route_name: block_content.add_page
+  parent: block.admin_display
+  weight: -5
+entity.block_content.collection:
+  title: Custom block library
+  route_name: entity.block_content.collection
+  parent: block.admin_display
+  weight: -4
+entity.block_content_type.collection:
+  title: Types
+  route_name: entity.block_content_type.collection
+  parent: block.admin_display
+  weight: -3
+block_content.type_add:
+  title: Add
+  route_name: block_content.type_add
+  parent: entity.block_content_type.collection
+  weight: -5
+contact.form_add:
+  title: Add contact form
+  route_name: contact.form_add
+  parent: entity.contact_form.collection
+  weight: -5
+#links comments
+comment.admin_approval:
+  title: Unapproved comments
+  route_name: comment.admin_approval
+  parent: comment.admin

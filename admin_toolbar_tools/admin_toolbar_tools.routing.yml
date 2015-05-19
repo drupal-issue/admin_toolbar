@@ -30,7 +30,14 @@ admin_toolbar_tools.flush_static:
   path: '/admin/flush/static-caches'
   defaults:
     _controller: '\Drupal\admin_toolbar_tools\Controller\ToolbarController::flush_static'
-    _title: 'static caches'
+    _title: 'Static caches'
+  requirements:
+    _permission: 'access administration pages'
+admin_toolbar_tools.flush_menu:
+  path: '/admin/flush/menu'
+  defaults:
+    _controller: '\Drupal\admin_toolbar_tools\Controller\ToolbarController::flush_menu'
+    _title: 'Menu'
   requirements:
     _permission: 'access administration pages'
 admin_toolbar_tools.drupalorg:
@@ -52,5 +59,12 @@ admin_toolbar_tools.doc:
   defaults:
     _controller: '\Drupal\admin_toolbar_tools\Controller\ToolbarController::documentation'
     _title: 'Documentation D8'
+  requirements:
+    _permission: 'access administration pages'
+admin_development:
+  path: '/admin/development'
+  defaults:
+    _controller: '\Drupal\admin_toolbar_tools\Controller\ToolbarController::development'
+    _title: 'Development'
   requirements:
     _permission: 'access administration pages'

@@ -2,7 +2,6 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 
-
 // add css and icon in toolbar
 /**
  * Implements hook_toolbar().
@@ -34,4 +33,308 @@ function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match)
       $output .= '<p>' . t('The Admin Toolbar Tools module allows you to to add more fonctionalities to the toolbar like flush caches, runnig cron.') . '</p>';
       return $output;
   }
+}
+
+/**
+ *  Implements hook_menu_links_discovered_alter().
+ */
+function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
+
+  if (\Drupal::moduleHandler()->moduleExists('devel')) {
+    $links['devel.admin_settings'] = array(
+      'title' => 'Devel settings',
+      'route_name' => 'devel.admin_settings',
+      'parent' => 'admin_development'
+    );
+    $links['devel.configs_list'] = array(
+      'title' => 'Config editor',
+      'route_name' => 'devel.configs_list',
+      'parent' => 'admin_development'
+    );
+    $links['devel.reinstall'] = array(
+      'title' => 'Reinstall Modules',
+      'route_name' => 'devel.reinstall',
+      'parent' => 'admin_development'
+    );
+    $links['devel.menu_rebuild'] = array(
+      'title' => 'Rebuild Menu',
+      'route_name' => 'devel.menu_rebuild',
+      'parent' => 'admin_development'
+    );
+    $links['devel.state_system_page'] = array(
+      'title' => 'State editor',
+      'route_name' => 'devel.state_system_page',
+      'parent' => 'admin_development'
+    );
+    $links['devel.theme_registry'] = array(
+      'title' => 'Theme registry',
+      'route_name' => 'devel.theme_registry',
+      'parent' => 'admin_development'
+    );
+    $links['devel.entity_info_page'] = array(
+      'title' => 'Entity Info',
+      'route_name' => 'devel.entity_info_page',
+      'parent' => 'admin_development'
+    );
+    $links['devel.execute_php'] = array(
+      'title' => 'Execute PHP',
+      'route_name' => 'devel.execute_php',
+      'parent' => 'admin_development'
+    );
+    $links['devel.session'] = array(
+      'title' => 'View Session',
+      'route_name' => 'devel.session',
+      'parent' => 'admin_development'
+    );
+    $links['devel.elements_page'] = array(
+      'title' => 'Hook_elements',
+      'route_name' => 'devel.elements_page',
+      'parent' => 'admin_development'
+    );
+    $links['devel.cache_clear'] = array(
+      'title' => 'Cache clear',
+      'route_name' => 'devel.cache_clear',
+      'parent' => 'admin_development'
+    );
+    $links['devel.run_cron'] = array(
+      'title' => 'Run cron',
+      'route_name' => 'devel.run_cron',
+      'parent' => 'admin_development'
+    );
+
+  }
+  // Adding links to /admin/structure/menu
+  $menu_titles = menu_ui_get_menus();
+  foreach ($menu_titles as $key => $value) {
+    $links['entity.menu.edit_form' . '_' . $key] = array(
+      'title' => $value,
+      'route_name' => 'entity.menu.edit_form',
+      'parent' => 'entity.menu.collection',
+      'route_parameters' => array(
+        'menu' => $key
+      )
+    );
+  }
+  // adding /node/add/{node_type};
+  $node_types = node_type_get_names();
+  foreach ($node_types as $machine_name_node_type => $name_node_type) {
+    $links['node.add' . $machine_name_node_type] = array(
+      'title' => $name_node_type,
+      'route_name' => 'node.add',
+      'parent' => 'node.add_page',
+      'route_parameters' => array(
+        'node_type' => $machine_name_node_type
+      )
+    );
+    $links['node.type' . $machine_name_node_type] = array(
+      'title' => $name_node_type,
+      'route_name' => 'entity.node_type.edit_form',
+      'parent' => 'entity.node_type.collection',
+      'route_parameters' => array(
+        'node_type' => $machine_name_node_type
+      )
+    );
+    $links['node.delete.type' . $machine_name_node_type] = array(
+      'title' => $name_node_type,
+      'route_name' => 'entity.node_type.edit_form',
+      'parent' => 'node_type.edit',
+      'route_parameters' => array(
+        'node_type' => $machine_name_node_type
+      )
+    );
+  }
+// add taxonomy links
+  $taxo_vocab = taxonomy_get_vocabulary();
+  foreach ($taxo_vocab as $machine_name_taxo_vocab => $value_taxo_vocab) {
+    $links['entity.taxonomy_vocabulary.edit_form' . $machine_name_taxo_vocab] = array(
+      'title' => $value_taxo_vocab,
+      'route_name' => 'entity.taxonomy_vocabulary.edit_form',
+      'parent' => 'entity.taxonomy_vocabulary.collection',
+      'route_parameters' => array(
+        'taxonomy_vocabulary' => $machine_name_taxo_vocab
+      )
+    );
+  }
+  // add comments links
+  $comments = comments_get_names();
+  foreach ($comments as $machine_name_comments => $name_comments) {
+    $links['entity.comment_type.edit_form' . $machine_name_comments] = array(
+      'title' => $name_comments,
+      'route_name' => 'entity.comment_type.edit_form',
+      'parent' => 'entity.comment_type.collection',
+      'route_parameters' => array(
+        'comment_type' => $machine_name_comments
+      )
+    );
+  }
+  //adding links /admin/structure/contact
+$contacts_form = contact_message_get_names();
+  foreach($contacts_form as $machine_name_contact_form => $name_contact_form){
+    $links['entity.comment_type.edit_form' . $machine_name_contact_form] = array(
+      'title' => $name_contact_form,
+      'route_name' => 'entity.contact_form.edit_form',
+      'parent' => 'entity.contact_form.collection',
+      'route_parameters' => array(
+        'contact_form' => $machine_name_contact_form
+      )
+    );
+  }
+
+  //addling links to /admin/structure/people
+  $prefix_people_child = "/admin/people";
+  $parents = delete_child_like_parent($prefix_people_child);
+  $user_roles = extract_label_id_user_role();
+  foreach ($parents as $route_name_parents => $values_parents) {
+    foreach ($values_parents as $keyChild => $valueChild) {
+      if (is_numeric($keyChild)) {
+        foreach ($user_roles as $id_user_role => $label_user_role) {
+          $links[$keyChild . $id_user_role] = array(
+            'title' => $label_user_role,
+            'route_name' => $valueChild,
+            'parent' => $route_name_parents,
+            'route_parameters' => array(
+              'user_role' => $id_user_role
+            )
+          );
+        }
+      }
+      else {
+        $links[$keyChild . $valueChild] = array(
+          'title' => "Add role",
+          'route_name' => $valueChild,
+          'parent' => $route_name_parents,
+          'weight' => -5
+        );
+      }
+    }
+  }
+  return $links;
+}
+// Get machine name and label of entity (bundle: taxonomy vocabulary).
+function taxonomy_get_vocabulary() {
+  return array_map(function ($bundle_info) {
+    return $bundle_info['label'];
+  }, \Drupal::entityManager()->getBundleInfo('taxonomy_term'));
+}
+// Get machine name and label of entity (bundle: contact message).
+function contact_message_get_names(){
+  return array_map(function ($bundle_info) {
+    return $bundle_info['label'];
+  }, \Drupal::entityManager()->getBundleInfo('contact_message'));
+}
+// Get machine name and label of entity (bundle: comments).
+function comments_get_names() {
+  return array_map(function ($bundle_info) {
+    return $bundle_info['label'];
+  }, \Drupal::entityManager()->getBundleInfo('comment'));
+}
+// Get machine name and label of entity (bundle: block).
+function block_get_names() {
+  return array_map(function ($bundle_info) {
+    return $bundle_info['label'];
+  }, \Drupal::entityManager()->getBundleInfo('block_content'));
+}
+
+// Extract label and id of all  users role.
+function extract_label_id_user_role() {
+  $roles_obj = user_roles();
+  $roles = array();
+  foreach ($roles_obj as $role) {
+    $roles[$role->id()] = $role->label();
+  }
+  return $roles;
+}
+
+// Select all path
+function db_select_router_path($prefix, $display_placeholder_path = FALSE) {
+  $results = db_select_router($prefix);
+  foreach ($results as $key => $value) {
+    $key = $value->path;
+    if ($display_placeholder_path == TRUE) {
+      if (!(substr_count($value->path, "{") != 0)) {
+        $list[$key] = $value->name;
+      }
+    }
+    else {
+      $list[$key] = $value->name;
+    }
+  }
+  asort($list);
+  return $list;
+}
+
+// Select all route from router table.
+function db_select_router_route($prefix, $display_placeholder_path = FALSE) {
+  $results = db_select_router($prefix);
+  foreach ($results as $key => $value) {
+    $key = $value->name;
+    if ($display_placeholder_path == TRUE) {
+      if (!(substr_count($value->path, "{") != 0)) {
+        $list[$key] = $value->path;
+      }
+    }
+    else {
+      $list[$key] = $value->path;
+    }
+  }
+  asort($list);
+  return $list;
+}
+
+// Select table router from db and filter result with a prefix.
+function db_select_router($prefix) {
+  return db_select('router', 't')
+    ->fields('t', array('path', 'name', 'number_parts'))
+    ->condition('path', db_like($prefix) . '%', 'LIKE')
+    ->execute();
+}
+
+// Retrieve the last element of the path = title of the page.
+function last_element_path($keys_paths) {
+  $titles = array();
+  foreach ($keys_paths as $keys_path) {
+    $titles[] = ucfirst(end(explode("/", $keys_path)));
+  }
+  return $titles;
+}
+
+// Extract child and parent route from prefix and parents
+function extract_repeated_path_in_array($prefix) {
+  $parents_path = array_keys(db_select_router_path($prefix . "/"));
+  $parents_route = array_values(db_select_router_path($prefix . "/"));
+
+  $routes = array_values(db_select_router_path($prefix));
+  $paths = array_keys(db_select_router_path($prefix));
+  $child = array();
+  $groupped_child = array();
+  for ($j = 0; $j < count($parents_path); $j++) {
+    unset($child);
+    for ($i = 0; $i < count($paths); $i++) {
+      if (substr_count($paths[$i], $parents_path[$j]) != 0) {
+        if (!(substr_count($paths[$i], '{') != 0)) {
+          $child["without"] = $routes[$i];
+        }
+        else {
+          $child[$i] = $routes[$i];
+        }
+      }
+    }
+    if (count($child) > 1) {
+      $groupped_child[$parents_route[$j]] = $child;
+    }
+  }
+  return $groupped_child;
+}
+// Delete all child which have the same route with parent.
+function delete_child_like_parent($prefix) {
+  $list_parents = extract_repeated_path_in_array($prefix);
+  $list_changed = $list_parents;
+  foreach ($list_changed as $list_parent => $valueParent) {
+    foreach ($valueParent as $childKey => $childValue) {
+      if ($list_parent == $childValue) {
+        unset($list_changed[$list_parent][$childKey]);
+      }
+    }
+  }
+  return $list_changed;
 }
