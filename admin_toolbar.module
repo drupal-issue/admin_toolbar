@@ -80,7 +80,7 @@ function toolbar_prerender_admin_toolbar_administration_tray(array $element) {
   $menu_tree = \Drupal::menuTree();
   // Render the top-level administration menu links.
   $parameters = new \Drupal\Core\Menu\MenuTreeParameters();
-  $parameters->setRoot('system.admin')->excludeRoot()->setMaxDepth(3);
+  $parameters->setRoot('system.admin')->excludeRoot()->setMaxDepth(4);
   $tree = $menu_tree->load(NULL, $parameters);
   $manipulators = array(
     array('callable' => 'menu.default_tree_manipulators:checkAccess'),

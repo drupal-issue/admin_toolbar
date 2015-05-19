@@ -41,3 +41,9 @@
     left: 160px;
     width: 160px;
 }
+.toolbar .toolbar-tray-vertical li.open > ul.menu {
+    display: none;
+}
+.toolbar .toolbar-tray-vertical li.open > ul.menu.clearfix {
+    display: block;
+}

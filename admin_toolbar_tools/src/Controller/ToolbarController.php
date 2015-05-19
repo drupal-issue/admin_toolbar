@@ -11,26 +11,32 @@ namespace Drupal\admin_toolbar_tools\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-
 /**
  * Class ToolbarController
  * @package Drupal\admin_toolbar_tools\Controller
  */
 class ToolbarController extends ControllerBase {
 
-  //This function display the tools in the menu
-
+//Redirect to home.
   public function home() {
     return new RedirectResponse('/');
   }
-  public function reload_page(){
+
+  //Reload the previous page.
+  public function reload_page() {
     $request = \Drupal::request();
     return $request->server->get('HTTP_REFERER');
   }
+
+  //Flush all caches.
   public function flushAll() {
     drupal_flush_all_caches();
     drupal_set_message(t('All cache cleared.'));
     return new RedirectResponse($this->reload_page());
+  }
+
+  public function  testdb() {
+    dpm(contact_message_get_names());
   }
 
   //This function flush css and javascript caches.
@@ -40,6 +46,7 @@ class ToolbarController extends ControllerBase {
     drupal_set_message(t('CSS and JavaScript cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
+
   //This function flush plugins caches.
   public function flush_plugins() {
     // Clear all plugin caches.
@@ -47,10 +54,18 @@ class ToolbarController extends ControllerBase {
     drupal_set_message(t('Plugin cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
+
   // Reset all static caches.
   public function flush_static() {
     drupal_static_reset();
     drupal_set_message(t('All static caches cleared.'));
+    return new RedirectResponse($this->reload_page());
+  }
+
+// Clears all cached menu data.
+  public function flush_menu() {
+    menu_cache_clear_all();
+    drupal_set_message(t('All cached menu data cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
@@ -59,6 +74,11 @@ class ToolbarController extends ControllerBase {
     $response = new RedirectResponse("https://www.drupal.org");
     $response->send();
     return $response;
+  }
+
+  //This function display the administration link Development
+  public function development() {
+    return new RedirectResponse('/admin/structure/menu/');
   }
 
   // this function allow to access in documentation(list changes of the different versions of drupal core) via admin_toolbar module.
@@ -74,9 +94,6 @@ class ToolbarController extends ControllerBase {
     $response->send();
     return $response;
   }
-  //This function display the administration link Development
-  public function development(){
-    return new RedirectResponse('/admin/structure/menu/');
-}
+
 
 }
