@@ -103,6 +103,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
 
   }
+  $links['node.add_page']['parent'] = "system.admin_content";
   // Adding links to /admin/structure/menu
   $menu_titles = menu_ui_get_menus();
   foreach ($menu_titles as $key => $value) {
@@ -168,7 +169,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
   }
   //adding links /admin/structure/contact
-$contacts_form = contact_message_get_names();
+  $contacts_form = contact_message_get_names();
   foreach($contacts_form as $machine_name_contact_form => $name_contact_form){
     $links['entity.comment_type.edit_form' . $machine_name_contact_form] = array(
       'title' => $name_contact_form,

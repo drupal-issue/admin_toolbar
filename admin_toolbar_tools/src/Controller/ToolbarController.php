@@ -35,10 +35,6 @@ class ToolbarController extends ControllerBase {
     return new RedirectResponse($this->reload_page());
   }
 
-  public function  testdb() {
-    dpm(contact_message_get_names());
-  }
-
   //This function flush css and javascript caches.
   public function flush_js_css() {
     \Drupal::state()
