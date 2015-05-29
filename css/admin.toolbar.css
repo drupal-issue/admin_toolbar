@@ -1,36 +1,60 @@
 /*---------------------- menu horizontal hover---------*/
 .menu-item:hover {
-    background: #a6d6f4;
+    background: #fff;
+}
+.menu-item:focus {
+    background: #abeae4;
 }
 .menu-item--expanded .menu {
-    background: #e8e8e0;
+    background: #fff;
     width: auto;
     height: auto;
 }
 .menu-item--expanded {
-    background: #f5f5f2;
+    background-color: #fff;
+
 }
+.toolbar-tray-horizontal ul li.menu-item{ border-left: 1px solid #dddddd; }
+.toolbar .toolbar-tray-horizontal .menu-item:last-child{border-right: inherit;}
+.toolbar-tray-horizontal li.menu-item--expanded:hover ul ul,
+.toolbar-tray-horizontal li.menu-item--expanded:hover ul ul ul,
+.toolbar-tray-horizontal li.menu-item--expanded:hover ul ul ul ul,
+.toolbar-tray-horizontal li.menu-item--expanded:hover ul ul ul ul ul {
+  display: none;
+  left: -999em; /* LTR */
+}
+
+/* Lists nested under hovered list items */
+.toolbar-tray-horizontal  li.menu-item--expanded:hover ul,
+.toolbar-tray-horizontal  li li.menu-item--expanded:hover ul,
+.toolbar-tray-horizontal  li li li.menu-item--expanded:hover ul,
+.toolbar-tray-horizontal  li li li li.menu-item--expanded:hover ul,
+.toolbar-tray-horizontal li li li li li.menu-item--expanded:hover ul {
+  display: block;
+  left: auto; /* LTR */
+}
+.toolbar-tray-horizontal .menu ul li a,.toolbar-tray-horizontal .menu ul .toolbar-icon{  padding: 12px 15px 12px 12px;}
+
 .toolbar-tray-horizontal ul li.menu-item--expanded:hover ul {
     display: block;
     position: absolute;
-    width: 180px;
+    width: 200px;
 }
-.toolbar-tray-horizontal ul li.menu-item--expanded .menu-item ul {
+.toolbar-tray-horizontal ul li.menu-item--expanded .menu-item > ul
+  {
     display: none;
+
+}
+.toolbar-tray-horizontal ul li.menu-item--expanded ul li.menu-item--expanded {
+    background-position: center right;
+    background-image: url('../../../core/misc/icons/0074bd/chevron-right.svg') ;
+    background-repeat: no-repeat;
 }
 .toolbar-tray-horizontal ul li.menu-item--expanded .menu-item:hover ul {
     display: block;
-    margin: -39.5px 0 0 178px;
+    margin: -37px 0 0 197px;
 }
-.toolbar-tray-horizontal li:hover ul,
-.toolbar-tray-horizontal li li:hover ul,
-.toolbar-tray-horizontal li li li:hover ul,
-.toolbar-tray-horizontal li li li li:hover ul,
-.toolbar-tray-horizontal li li li li li:hover ul {
-    display: block;
-    left: auto;
-    top: auto;
-}
+
 .toolbar-tray-horizontal li:hover ul li {
     float: none;
 }
@@ -38,8 +62,8 @@
     position: absolute;
     padding-top: 0;
     top: 0;
-    left: 160px;
-    width: 160px;
+    left: 200px;
+    width: 200px;
 }
 .toolbar .toolbar-tray-vertical li.open > ul.menu {
     display: none;
