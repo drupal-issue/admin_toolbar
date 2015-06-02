@@ -77,7 +77,7 @@ function admin_toolbar_toolbar_alter(&$items) {
  * @see drupal_render()
  */
 function toolbar_prerender_admin_toolbar_administration_tray(array $element) {
-  $menu_tree = \Drupal::menuTree();
+  $menu_tree = \Drupal::service('toolbar.menu_tree');
   // Render the top-level administration menu links.
   $parameters = new \Drupal\Core\Menu\MenuTreeParameters();
   $parameters->setRoot('system.admin')->excludeRoot()->setMaxDepth(4);
