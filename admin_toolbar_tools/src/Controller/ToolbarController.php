@@ -31,7 +31,7 @@ class ToolbarController extends ControllerBase {
   //Flush all caches.
   public function flushAll() {
     drupal_flush_all_caches();
-    drupal_set_message(t('All cache cleared.'));
+    drupal_set_message($this->t('All cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
@@ -39,7 +39,7 @@ class ToolbarController extends ControllerBase {
   public function flush_js_css() {
     \Drupal::state()
       ->set('system.css_js_query_string', base_convert(REQUEST_TIME, 10, 36));
-    drupal_set_message(t('CSS and JavaScript cache cleared.'));
+    drupal_set_message($this->t('CSS and JavaScript cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
@@ -47,21 +47,21 @@ class ToolbarController extends ControllerBase {
   public function flush_plugins() {
     // Clear all plugin caches.
     \Drupal::service('plugin.cache_clearer')->clearCachedDefinitions();
-    drupal_set_message(t('Plugin cache cleared.'));
+    drupal_set_message($this->t('Plugin cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
   // Reset all static caches.
   public function flush_static() {
     drupal_static_reset();
-    drupal_set_message(t('All static caches cleared.'));
+    drupal_set_message($this->t('All static caches cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
 // Clears all cached menu data.
   public function flush_menu() {
     menu_cache_clear_all();
-    drupal_set_message(t('All cached menu data cleared.'));
+    drupal_set_message($this->t('All cached menu data cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
