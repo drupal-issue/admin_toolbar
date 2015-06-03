@@ -61,21 +61,6 @@ admin_development:
   weight: -8
   route_name: admin_development
   parent: admin_toolbar_tools.help
-update.module_update:
-  title: Update
-  route_name: update.module_update
-  parent: system.modules_list
-  weight: -1
-system.modules_uninstall:
-  title: Uninstall
-  route_name: system.modules_uninstall
-  parent: system.modules_list
-  weight: -2
-update.module_install:
-  title: Install new module
-  route_name: update.module_install
-  parent: system.modules_list
-  weight: -3
 #add menu to people
 user.admin_create:
   title: Add user

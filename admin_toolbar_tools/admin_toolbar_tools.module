@@ -40,6 +40,27 @@ function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match)
  */
 function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
 
+ // If module update is enabled.
+  if(\Drupal::moduleHandler()->moduleExists('update')){
+    $links['update.module_update'] = array(
+      'title' => 'Update',
+      'route_name' => 'update.module_update',
+      'parent' => 'system.modules_list',
+      'weight' => -1
+    );
+    $links['system.modules_uninstall'] = array(
+      'title' => 'Uninstall',
+      'route_name' => 'update.module_update',
+      'parent' => 'system.modules_list',
+      'weight' => -2
+    );
+    $links['update.module_install'] = array(
+      'title' => 'Install new module',
+      'route_name' => 'update.module_install',
+      'parent' => 'system.modules_list',
+      'weight' => -3
+    );
+  }
   if (\Drupal::moduleHandler()->moduleExists('devel')) {
     $links['devel.admin_settings'] = array(
       'title' => 'Devel settings',
