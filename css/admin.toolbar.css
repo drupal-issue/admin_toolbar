@@ -52,7 +52,7 @@
 }
 .toolbar-tray-horizontal ul li.menu-item--expanded ul li.menu-item--expanded {
     background-position: center right;
-    background-image: url('../../../core/misc/icons/0074bd/chevron-right.svg') ;
+    background-image: url('../admin_toolbar_tools/misc/icons/ffffff/chevron-right.svg') ;
     background-repeat: no-repeat;
 }
 .toolbar-tray-horizontal ul li.menu-item--expanded .menu-item:hover ul {
