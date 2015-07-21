@@ -21,7 +21,6 @@ function admin_toolbar_toolbar_alter(&$items) {
  */
 function admin_toolbar_prerender_toolbar_administration_tray(array $element) {
   $menu_tree = \Drupal::service('toolbar.menu_tree');
-  // Render the top-level administration menu links.
   $parameters = new MenuTreeParameters();
   $parameters->setRoot('system.admin')->excludeRoot()->setMaxDepth(4)->onlyEnabledLinks();
   $tree = $menu_tree->load(NULL, $parameters);
