@@ -1,11 +1,3 @@
-admin_toolbar_tools.help:
-  path: '/admin/tools'
-  defaults:
-    _controller: '\Drupal\admin_toolbar_tools\Controller\ToolbarController::home'
-    _title: 'Toolbar tools'
-  requirements:
-    _permission: 'access administration pages'
-    _csrf_token: 'TRUE'
 admin_toolbar_tools.flush:
   path: '/admin/flush'
   defaults:

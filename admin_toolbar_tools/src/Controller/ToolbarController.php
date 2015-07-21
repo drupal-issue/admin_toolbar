@@ -40,13 +40,6 @@ class ToolbarController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static($container->get('cron'));
   }
-//Redirect to home.
-  public function home() {
-    return new RedirectResponse('/');
-  }
-
-
-
   //Reload the previous page.
   public function reload_page() {
     $request = \Drupal::request();
