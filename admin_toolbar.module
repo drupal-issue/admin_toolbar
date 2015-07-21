@@ -1,74 +1,29 @@
 <?php
+use Drupal\Core\Menu\MenuTreeParameters;
 /**
  *  Implements hook_toolbar_alter().
  */
 function admin_toolbar_toolbar_alter(&$items) {
-  // To conserve bandwidth, we only include the top-level links in the HTML.
-  // The subtrees are fetched through a JSONP script that is generated at the
-  // toolbar_subtrees route. We provide the JavaScript requesting that JSONP
-  // script here with the hash parameter that is needed for that route.
-  // @see toolbar_subtrees_jsonp()
-  $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
-  $subtrees_attached['drupalSettings']['toolbar'] = [
-    'subtreesHash' => admin_toolbar_get_subtrees_hash($langcode),
-    'langcode' => $langcode,
-  ];
-  // a toolbar tray. The tray contains the full administrative menu of the site.
-  $items['administration'] = array(
-    '#type' => 'toolbar_item',
-    '#attached' => array(
-      'library' => array(
-        'admin_toolbar/toolbar.tree',
-      ),
-    ),
-    'tab' => array(
-      '#type' => 'link',
-      '#title' => t('Manage'),
-      '#url' => \Drupal\Core\Url::fromRoute('system.admin'),
-      '#attributes' => array(
-        'title' => t('Admin menu'),
-        'class' => array('toolbar-icon', 'toolbar-icon-menu'),
-        // A data attribute that indicates to the client to defer loading of
-        // the admin menu subtrees until this tab is activated. Admin menu
-        // subtrees will not render to the DOM if this attribute is removed.
-        // The value of the attribute is intentionally left blank. Only the
-        // presence of the attribute is necessary.
-        'data-drupal-subtrees' => '',
-      ),
-    ),
-    'tray' => array(
-      '#heading' => t('Administration menu'),
-      '#attached' => $subtrees_attached,
-      'toolbar_administration' => array(
-        '#pre_render' => array(
-          'toolbar_prerender_admin_toolbar_administration_tray',
-        ),
-        '#type' => 'container',
-        '#attributes' => array(
-          'class' => array('toolbar-menu-administration'),
-        ),
-      ),
-    ),
-    '#weight' => -15,
-  );
-  return $items;
+  $items['administration']['tray']['toolbar_administration']['#pre_render'] = array('admin_toolbar_prerender_toolbar_administration_tray');
+  $items['administration']['#attached']['library'][] = 'admin_toolbar/toolbar.tree';
 }
 /**
  * Renders the toolbar's administration tray.
- *
+ * This is a clone of core's toolbar_prerender_toolbar_administration_tray()
+ * function, which uses setMaxDepth(4) instead of setTopLevelOnly()
  * @param array $element
  *   A renderable array.
  *
  * @return array
  *   The updated renderable array.
  *
- * @see drupal_render()
+ * @see toolbar_prerender_toolbar_administration_tray()
  */
-function toolbar_prerender_admin_toolbar_administration_tray(array $element) {
+function admin_toolbar_prerender_toolbar_administration_tray(array $element) {
   $menu_tree = \Drupal::service('toolbar.menu_tree');
   // Render the top-level administration menu links.
-  $parameters = new \Drupal\Core\Menu\MenuTreeParameters();
-  $parameters->setRoot('system.admin')->excludeRoot()->setMaxDepth(4);
+  $parameters = new MenuTreeParameters();
+  $parameters->setRoot('system.admin')->excludeRoot()->setMaxDepth(4)->onlyEnabledLinks();
   $tree = $menu_tree->load(NULL, $parameters);
   $manipulators = array(
     array('callable' => 'menu.default_tree_manipulators:checkAccess'),
@@ -77,37 +32,6 @@ function toolbar_prerender_admin_toolbar_administration_tray(array $element) {
   );
   $tree = $menu_tree->transform($tree, $manipulators);
   $element['administration_menu'] = $menu_tree->build($tree);
+
   return $element;
-}
-/**
- * Returns the hash of the per-user rendered toolbar subtrees.
- *
- * @param string $langcode
- *   The langcode of the current request.
- *
- * @return string
- *   The hash of the admin_menu subtrees.
- */
-function admin_toolbar_get_subtrees_hash($langcode) {
-  $uid = \Drupal::currentUser()->id();
-  $cid = get_user_cid_toolbar($uid, $langcode);
-  $subtrees = toolbar_get_rendered_subtrees();
-  $hash = \Drupal\Component\Utility\Crypt::hashBase64(serialize($subtrees));
-  $role_list_cache_tags = \Drupal::entityManager()->getDefinition('user_role')->getListCacheTags();
-  \Drupal::cache('toolbar')->set($cid, $hash, \Drupal\Core\Cache\Cache::PERMANENT, \Drupal\Core\Cache\Cache::mergeTags(array('user:' . $uid, 'locale', 'config:system.menu.admin'), $role_list_cache_tags));
-  return $hash;
-}
-/**
- * Returns a cache ID from the user and language IDs.
- *
- * @param int $uid
- *   A user ID.
- * @param string $langcode
- *   The langcode of the current request.
- *
- * @return string
- *   A unique cache ID for the user.
- */
-function get_user_cid_toolbar($uid, $langcode) {
-  return 'toolbar_' . $uid . ':' . $langcode;
 }
