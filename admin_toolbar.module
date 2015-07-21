@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  Implements hook_toolbar_alter().
  */
@@ -17,6 +16,11 @@ function admin_toolbar_toolbar_alter(&$items) {
   // a toolbar tray. The tray contains the full administrative menu of the site.
   $items['administration'] = array(
     '#type' => 'toolbar_item',
+    '#attached' => array(
+      'library' => array(
+        'admin_toolbar/toolbar.tree',
+      ),
+    ),
     'tab' => array(
       '#type' => 'link',
       '#title' => t('Manage'),
@@ -46,14 +50,8 @@ function admin_toolbar_toolbar_alter(&$items) {
       ),
     ),
     '#weight' => -15,
-    '#attached' => array(
-      'library' => array(
-        'admin_toolbar/toolbar.tree',
-      ),
-    ),
   );
   return $items;
-
 }
 /**
  * Renders the toolbar's administration tray.
@@ -92,10 +90,24 @@ function toolbar_prerender_admin_toolbar_administration_tray(array $element) {
  */
 function admin_toolbar_get_subtrees_hash($langcode) {
   $uid = \Drupal::currentUser()->id();
-  $cid = _toolbar_get_user_cid($uid, $langcode);
+  $cid = get_user_cid_toolbar($uid, $langcode);
   $subtrees = toolbar_get_rendered_subtrees();
   $hash = \Drupal\Component\Utility\Crypt::hashBase64(serialize($subtrees));
   $role_list_cache_tags = \Drupal::entityManager()->getDefinition('user_role')->getListCacheTags();
   \Drupal::cache('toolbar')->set($cid, $hash, \Drupal\Core\Cache\Cache::PERMANENT, \Drupal\Core\Cache\Cache::mergeTags(array('user:' . $uid, 'locale', 'config:system.menu.admin'), $role_list_cache_tags));
   return $hash;
+}
+/**
+ * Returns a cache ID from the user and language IDs.
+ *
+ * @param int $uid
+ *   A user ID.
+ * @param string $langcode
+ *   The langcode of the current request.
+ *
+ * @return string
+ *   A unique cache ID for the user.
+ */
+function get_user_cid_toolbar($uid, $langcode) {
+  return 'toolbar_' . $uid . ':' . $langcode;
 }

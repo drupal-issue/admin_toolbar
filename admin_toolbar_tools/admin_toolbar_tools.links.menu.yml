@@ -34,8 +34,3 @@ admin_toolbar_tools.doc:
   weight: -5
   route_name: admin_toolbar_tools.doc
   parent: admin_toolbar_tools.drupalorg
-admin_development:
-  title: Development
-  weight: -8
-  route_name: admin_development
-  parent: admin_toolbar_tools.help

@@ -9,6 +9,8 @@ namespace Drupal\admin_toolbar_tools\Controller;
 
 //Use the necessary classes
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\CronInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -16,11 +18,34 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @package Drupal\admin_toolbar_tools\Controller
  */
 class ToolbarController extends ControllerBase {
+  /**
+   * The cron service.
+   *
+   * @var \Drupal\Core\CronInterface
+   */
+  protected $cron;
+  /**
+   * Constructs a CronController object.
+   *
+   * @param \Drupal\Core\CronInterface $cron
+   *   The cron service.
+   */
+  public function __construct(CronInterface $cron) {
+    $this->cron = $cron;
+  }
 
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static($container->get('cron'));
+  }
 //Redirect to home.
   public function home() {
     return new RedirectResponse('/');
   }
+
+
 
   //Reload the previous page.
   public function reload_page() {
@@ -31,7 +56,7 @@ class ToolbarController extends ControllerBase {
   //Flush all caches.
   public function flushAll() {
     drupal_flush_all_caches();
-    drupal_set_message(t('All cache cleared.'));
+    drupal_set_message($this->t('All cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
@@ -39,7 +64,7 @@ class ToolbarController extends ControllerBase {
   public function flush_js_css() {
     \Drupal::state()
       ->set('system.css_js_query_string', base_convert(REQUEST_TIME, 10, 36));
-    drupal_set_message(t('CSS and JavaScript cache cleared.'));
+    drupal_set_message($this->t('CSS and JavaScript cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
@@ -47,21 +72,21 @@ class ToolbarController extends ControllerBase {
   public function flush_plugins() {
     // Clear all plugin caches.
     \Drupal::service('plugin.cache_clearer')->clearCachedDefinitions();
-    drupal_set_message(t('Plugin cache cleared.'));
+    drupal_set_message($this->t('Plugin cache cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
   // Reset all static caches.
   public function flush_static() {
     drupal_static_reset();
-    drupal_set_message(t('All static caches cleared.'));
+    drupal_set_message($this->t('All static caches cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
 // Clears all cached menu data.
   public function flush_menu() {
     menu_cache_clear_all();
-    drupal_set_message(t('All cached menu data cleared.'));
+    drupal_set_message($this->t('All cached menu data cleared.'));
     return new RedirectResponse($this->reload_page());
   }
 
@@ -89,6 +114,12 @@ class ToolbarController extends ControllerBase {
     $response = new RedirectResponse("https://api.drupal.org/api/drupal/8");
     $response->send();
     return $response;
+  }
+
+  public function runCron() {
+    $this->cron->run();
+    drupal_set_message($this->t('Cron ran successfully.'));
+    return new RedirectResponse($this->reload_page());
   }
 
 

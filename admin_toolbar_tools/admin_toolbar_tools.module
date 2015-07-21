@@ -41,10 +41,10 @@ function admin_toolbar_tools_help($route_name, RouteMatchInterface $route_match)
 function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
 
   // If module system is enabled.
-  if(\Drupal::moduleHandler()->moduleExists('system')){
+  if (\Drupal::moduleHandler()->moduleExists('system')) {
     $links['system.run_cron'] = array(
       'title' => 'Run cron',
-      'route_name' => 'system.run_cron',
+      'route_name' => 'admin_toolbar.run.cron',
       'parent' => 'admin_toolbar_tools.help',
       'weight' => -8
     );
@@ -69,7 +69,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   }
 
   // If module user is enabled.
-  if(\Drupal::moduleHandler()->moduleExists('user')){
+  if (\Drupal::moduleHandler()->moduleExists('user')) {
     $links['user.admin_create'] = array(
       'title' => 'Add user',
       'route_name' => 'user.admin_create',
@@ -96,8 +96,8 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
   }
   // If module node is enabled.
-  if(\Drupal::moduleHandler()->moduleExists('node')){
-    $links['node.add_page'] = array(
+  if (\Drupal::moduleHandler()->moduleExists('node')) {
+    $links['node.type_add'] = array(
       'title' => 'Add content type',
       'route_name' => 'node.type_add',
       'parent' => 'entity.node_type.collection',
@@ -105,7 +105,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
   }
   // If module taxonomy is enabled.
-  if(\Drupal::moduleHandler()->moduleExists('taxonomy')){
+  if (\Drupal::moduleHandler()->moduleExists('taxonomy')) {
     $links['entity.taxonomy_vocabulary.add_form'] = array(
       'title' => 'Add vocabulary',
       'route_name' => 'entity.taxonomy_vocabulary.add_form',
@@ -114,7 +114,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
   }
   // If module comment is enabled.
-  if(\Drupal::moduleHandler()->moduleExists('comment')){
+  if (\Drupal::moduleHandler()->moduleExists('comment')) {
     $links['entity.comment_type.add_form'] = array(
       'title' => 'Add comment type',
       'route_name' => 'entity.comment_type.add_form',
@@ -130,7 +130,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
 
   }
   // If module menu_ui is enabled.
-  if(\Drupal::moduleHandler()->moduleExists('menu_ui')){
+  if (\Drupal::moduleHandler()->moduleExists('menu_ui')) {
 
     $links['entity.menu.add_form'] = array(
       'title' => 'Add menu',
@@ -140,7 +140,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
   }
   // If module block_content is enabled.
-  if(\Drupal::moduleHandler()->moduleExists('block_content')){
+  if (\Drupal::moduleHandler()->moduleExists('block_content')) {
     $links['block_content.add_page'] = array(
       'title' => 'Add custom block',
       'route_name' => 'block_content.add_page',
@@ -167,7 +167,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
   }
   // If module contact is enabled.
-  if(\Drupal::moduleHandler()->moduleExists('contact')){
+  if (\Drupal::moduleHandler()->moduleExists('contact')) {
     $links['contact.form_add'] = array(
       'title' => 'Add contact form',
       'route_name' => 'contact.form_add',
@@ -175,8 +175,8 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'weight' => -5
     );
   }
- // If module update is enabled.
-  if(\Drupal::moduleHandler()->moduleExists('update')){
+  // If module update is enabled.
+  if (\Drupal::moduleHandler()->moduleExists('update')) {
     $links['update.module_update'] = array(
       'title' => 'Update',
       'route_name' => 'update.module_update',
@@ -197,6 +197,12 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
   }
   if (\Drupal::moduleHandler()->moduleExists('devel')) {
+    $links['admin_development'] = array(
+      'title' => 'Development',
+      'route_name' => 'admin_development',
+      'parent' => 'admin_toolbar_tools.help',
+      'weight' => -8
+    );
     $links['devel.admin_settings'] = array(
       'title' => 'Devel settings',
       'route_name' => 'devel.admin_settings',
@@ -301,7 +307,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
   }
 // add taxonomy links
-  $taxo_vocab = taxonomy_get_vocabulary();
+  $taxo_vocab = admin_toolbar_tools_taxonomy_get_vocabulary();
   foreach ($taxo_vocab as $machine_name_taxo_vocab => $value_taxo_vocab) {
     $links['entity.taxonomy_vocabulary.edit_form' . $machine_name_taxo_vocab] = array(
       'title' => $value_taxo_vocab,
@@ -313,7 +319,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
   }
   // add comments links
-  $comments = comments_get_names();
+  $comments = admin_toolbar_tools_comments_get_names();
   foreach ($comments as $machine_name_comments => $name_comments) {
     $links['entity.comment_type.edit_form' . $machine_name_comments] = array(
       'title' => $name_comments,
@@ -325,8 +331,8 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
   }
   //adding links /admin/structure/contact
-  $contacts_form = contact_message_get_names();
-  foreach($contacts_form as $machine_name_contact_form => $name_contact_form){
+  $contacts_form = admin_toolbar_tools_contact_message_get_names();
+  foreach ($contacts_form as $machine_name_contact_form => $name_contact_form) {
     $links['entity.comment_type.edit_form' . $machine_name_contact_form] = array(
       'title' => $name_contact_form,
       'route_name' => 'entity.contact_form.edit_form',
@@ -339,8 +345,8 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
 
   //addling links to /admin/structure/people
   $prefix_people_child = "/admin/people";
-  $parents = delete_child_like_parent($prefix_people_child);
-  $user_roles = extract_label_id_user_role();
+  $parents = admin_toolbar_tools_delete_child_like_parent($prefix_people_child);
+  $user_roles = admin_toolbar_tools_extract_label_id_user_role();
   foreach ($parents as $route_name_parents => $values_parents) {
     foreach ($values_parents as $keyChild => $valueChild) {
       if (is_numeric($keyChild)) {
@@ -367,33 +373,37 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
   }
   return $links;
 }
+
 // Get machine name and label of entity (bundle: taxonomy vocabulary).
-function taxonomy_get_vocabulary() {
+function admin_toolbar_tools_taxonomy_get_vocabulary() {
   return array_map(function ($bundle_info) {
     return $bundle_info['label'];
   }, \Drupal::entityManager()->getBundleInfo('taxonomy_term'));
 }
+
 // Get machine name and label of entity (bundle: contact message).
-function contact_message_get_names(){
+function admin_toolbar_tools_contact_message_get_names() {
   return array_map(function ($bundle_info) {
     return $bundle_info['label'];
   }, \Drupal::entityManager()->getBundleInfo('contact_message'));
 }
+
 // Get machine name and label of entity (bundle: comments).
-function comments_get_names() {
+function admin_toolbar_tools_comments_get_names() {
   return array_map(function ($bundle_info) {
     return $bundle_info['label'];
   }, \Drupal::entityManager()->getBundleInfo('comment'));
 }
+
 // Get machine name and label of entity (bundle: block).
-function block_get_names() {
+function admin_toolbar_tools_block_get_names() {
   return array_map(function ($bundle_info) {
     return $bundle_info['label'];
   }, \Drupal::entityManager()->getBundleInfo('block_content'));
 }
 
 // Extract label and id of all  users role.
-function extract_label_id_user_role() {
+function admin_toolbar_tools_extract_label_id_user_role() {
   $roles_obj = user_roles();
   $roles = array();
   foreach ($roles_obj as $role) {
@@ -403,8 +413,8 @@ function extract_label_id_user_role() {
 }
 
 // Select all path
-function db_select_router_path($prefix, $display_placeholder_path = FALSE) {
-  $results = db_select_router($prefix);
+function admin_toolbar_tools_db_select_router_path($prefix, $display_placeholder_path = FALSE) {
+  $results = admin_toolbar_tools_db_select_router($prefix);
   foreach ($results as $key => $value) {
     $key = $value->path;
     if ($display_placeholder_path == TRUE) {
@@ -421,8 +431,8 @@ function db_select_router_path($prefix, $display_placeholder_path = FALSE) {
 }
 
 // Select all route from router table.
-function db_select_router_route($prefix, $display_placeholder_path = FALSE) {
-  $results = db_select_router($prefix);
+function admin_toolbar_tools_db_select_router_route($prefix, $display_placeholder_path = FALSE) {
+  $results = admin_toolbar_tools_db_select_router($prefix);
   foreach ($results as $key => $value) {
     $key = $value->name;
     if ($display_placeholder_path == TRUE) {
@@ -439,7 +449,7 @@ function db_select_router_route($prefix, $display_placeholder_path = FALSE) {
 }
 
 // Select table router from db and filter result with a prefix.
-function db_select_router($prefix) {
+function admin_toolbar_tools_db_select_router($prefix) {
   return db_select('router', 't')
     ->fields('t', array('path', 'name', 'number_parts'))
     ->condition('path', db_like($prefix) . '%', 'LIKE')
@@ -447,7 +457,7 @@ function db_select_router($prefix) {
 }
 
 // Retrieve the last element of the path = title of the page.
-function last_element_path($keys_paths) {
+function admin_toolbar_tools_last_element_path($keys_paths) {
   $titles = array();
   foreach ($keys_paths as $keys_path) {
     $titles[] = ucfirst(end(explode("/", $keys_path)));
@@ -456,12 +466,12 @@ function last_element_path($keys_paths) {
 }
 
 // Extract child and parent route from prefix and parents
-function extract_repeated_path_in_array($prefix) {
-  $parents_path = array_keys(db_select_router_path($prefix . "/"));
-  $parents_route = array_values(db_select_router_path($prefix . "/"));
+function admin_toolbar_tools_extract_repeated_path_in_array($prefix) {
+  $parents_path = array_keys(admin_toolbar_tools_db_select_router_path($prefix . "/"));
+  $parents_route = array_values(admin_toolbar_tools_db_select_router_path($prefix . "/"));
 
-  $routes = array_values(db_select_router_path($prefix));
-  $paths = array_keys(db_select_router_path($prefix));
+  $routes = array_values(admin_toolbar_tools_db_select_router_path($prefix));
+  $paths = array_keys(admin_toolbar_tools_db_select_router_path($prefix));
   $child = array();
   $groupped_child = array();
   for ($j = 0; $j < count($parents_path); $j++) {
@@ -482,9 +492,10 @@ function extract_repeated_path_in_array($prefix) {
   }
   return $groupped_child;
 }
+
 // Delete all child which have the same route with parent.
-function delete_child_like_parent($prefix) {
-  $list_parents = extract_repeated_path_in_array($prefix);
+function admin_toolbar_tools_delete_child_like_parent($prefix) {
+  $list_parents = admin_toolbar_tools_extract_repeated_path_in_array($prefix);
   $list_changed = $list_parents;
   foreach ($list_changed as $list_parent => $valueParent) {
     foreach ($valueParent as $childKey => $childValue) {
