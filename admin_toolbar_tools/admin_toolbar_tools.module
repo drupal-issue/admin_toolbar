@@ -51,8 +51,6 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     'weight' => -100
   );
   // Add system links.
-  if (\Drupal::moduleHandler()->moduleExists('system')) {
-
     $links['system.admin_index'] = array(
       'title' => 'Index',
       'route_name' => 'system.admin_index',
@@ -76,9 +74,6 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'route_name' => 'system.modules_uninstall',
       'parent' => 'system.modules_list',
     );
-  }
-  // If module user is enabled.
-  if (\Drupal::moduleHandler()->moduleExists('user')) {
     // Add user links.
     $links['user.admin_create'] = array(
       'title' => 'Add user',
@@ -117,8 +112,6 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
         ),
       );
     }
-  }
-  if (\Drupal::moduleHandler()->moduleExists('node')) {
 
     $links['node.add_page']['parent'] = 'system.admin_content';
     $links['node.type_add'] = array(
@@ -127,7 +120,6 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'parent' => 'entity.node_type.collection',
       'weight' => -5
     );
-  }
 // Add node links.
   foreach (node_type_get_names() as $machine_name => $label) {
     $links['node.add.' . $machine_name] = array(
@@ -156,14 +148,14 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
 
   }
-  // If module taxonomy is enabled.
-  if (\Drupal::moduleHandler()->moduleExists('taxonomy')) {
+    // If module taxonomy is enabled.
+    if (\Drupal::moduleHandler()->moduleExists('taxonomy')) {
 
     $links['entity.taxonomy_vocabulary.add_form'] = array(
       'title' => 'Add vocabulary',
       'route_name' => 'entity.taxonomy_vocabulary.add_form',
       'parent' => 'entity.taxonomy_vocabulary.collection',
-      'weight' => -5
+      'weight' => -5,
     );
 
     // Add taxonomy links.
@@ -173,6 +165,14 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
         'title' => $bundle['label'],
         'route_name' => 'entity.taxonomy_vocabulary.edit_form',
         'parent' => 'entity.taxonomy_vocabulary.collection',
+        'route_parameters' => array(
+          'taxonomy_vocabulary' => $machine_name,
+        ),
+      );
+      $links['entity.taxonomy_term.add_form.' . $machine_name] = array(
+        'title' => $bundle['label'],
+        'route_name' => 'entity.taxonomy_term.add_form',
+        'parent' => 'entity.taxonomy_vocabulary.edit_form',
         'route_parameters' => array(
           'taxonomy_vocabulary' => $machine_name,
         ),
