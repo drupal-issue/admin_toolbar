@@ -4,3 +4,5 @@ description: Admin Toolbar improve the default Drupal Toolbar,it lets the hover 
 package: Administration
 type: module
 version: 1.0
+dependencies:
+  - toolbar
