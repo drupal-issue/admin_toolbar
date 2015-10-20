@@ -90,7 +90,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       'route_name' => 'entity.user_role.collection',
       'parent' => 'entity.user.collection',
     );
-    $links['user.logoutt'] = array(
+    $links['user.logouttt'] = array(
       'title' => 'Logout',
       'route_name' => 'user.logout',
       'parent' => 'admin_toolbar_tools.help',
