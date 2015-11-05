@@ -71,9 +71,9 @@
     left: 200px;
     width: 200px;
 }
-.toolbar .toolbar-tray-vertical li.open > ul.toolbar-menu {
+/*.toolbar .toolbar-tray-vertical li.open > ul.toolbar-menu {
     display: none;
-}
+}*/
 .toolbar .toolbar-tray-vertical li.open > ul.toolbar-menu.clearfix {
     display: block;
 }
