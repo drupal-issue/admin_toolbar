@@ -344,4 +344,13 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     );
 
   }
+  // If module views_ui enabled.
+  if (\Drupal::moduleHandler()->moduleExists('views_ui')) {
+    $links['views_ui.add'] = array(
+      'title' => 'Add new view',
+      'route_name' => 'views_ui.add',
+      'parent' => 'entity.view.collection',
+      'weight' => -5,
+    );
+  }
 }
