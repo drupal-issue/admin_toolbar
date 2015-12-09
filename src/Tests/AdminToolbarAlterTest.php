@@ -28,13 +28,13 @@ class AdminToolbarAlterTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('toolbar', 'admin_toolbar', 'admin_toolbar_tools');
+  public static $modules = array('toolbar', 'admin_toolbar');
 
   protected function setUp() {
     parent::setUp();
 
     // Create an administrative user and log it in.
-    $this->adminUser = $this->drupalCreateUser(array('access toolbar', 'administer modules', 'access administration pages'));
+    $this->adminUser = $this->drupalCreateUser(array('access toolbar', 'access administration pages'));
     $this->drupalLogin($this->adminUser);
   }
 
@@ -44,9 +44,8 @@ class AdminToolbarAlterTest extends WebTestBase {
   function testAdminToolbar() {
 
     // Assert that expanded links are present in HTML.
-    // Test with the uninstall link that must be there whatever modules exists.
-    $this->assertRaw('id="toolbar-link-system-modules_uninstall"');
+    // Test with the site configuration link that must be there whatever modules exists.
+    $this->assertRaw('id="toolbar-link-system-admin_config_system"');
 
   }
-
 }
