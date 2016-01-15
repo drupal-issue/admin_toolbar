@@ -14,8 +14,11 @@ function admin_toolbar_tools_toolbar() {
   $items = array();
   $items['admin_toolbar_tools'] = array(
     '#type' => 'toolbar_item',
-    '#attributes' => array(
-      'class' => array('toolbar-icon', 'toolbar-icon-admin-toolbar-tools-help'),
+    'tab' => array(
+        '#type' => 'link',
+        '#attributes' => array(
+        'class' => array('toolbar-icon', 'toolbar-icon-admin-toolbar-tools-help'),
+    ),
     ),
     '#attached' => array(
       'library' => array(
