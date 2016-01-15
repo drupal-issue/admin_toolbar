@@ -5,16 +5,16 @@
  * Contains \Drupal\admin_toolbar\Tests\AdminToolbarAlterTest.
  */
 
-namespace Drupal\admin_toolbar_tools\Tests;
+namespace Drupal\admin_toolbar\Tests;
 
 use Drupal\simpletest\WebTestBase;
 
 /**
- * Test the existence of Admin Toolbar tools new links.
+ * Test the existence of Admin Toolbar module.
  *
- * @group admin_toolbar_tools
+ * @group admin_toolbar
  */
-class AdminToolbarToolsAlterTest extends WebTestBase {
+class AdminToolbarAlterTest extends WebTestBase {
 
   /**
    * A user with permission to access the administrative toolbar.
@@ -28,7 +28,7 @@ class AdminToolbarToolsAlterTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('toolbar', 'admin_toolbar', 'admin_toolbar_tools');
+  public static $modules = array('toolbar', 'admin_toolbar');
 
   protected function setUp() {
     parent::setUp();
@@ -41,11 +41,11 @@ class AdminToolbarToolsAlterTest extends WebTestBase {
   /**
    * Tests for a the hover of sub menus.
    */
-  function testAdminToolbarTools() {
+  function testAdminToolbar() {
 
-    // Test for admin_toolbar_tools if special menu items are added.
-    $this->assertRaw('id="toolbar-link-admin_toolbar_tools-flush"');
+    // Assert that expanded links are present in HTML.
+    // Test with the site configuration link that must be there whatever modules exists.
+    $this->assertRaw('data-drupal-link-system-path="admin/config/system"');
 
   }
-
 }
