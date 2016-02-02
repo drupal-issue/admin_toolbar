@@ -28,13 +28,20 @@ class AdminToolbarToolsAlterTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('toolbar', 'admin_toolbar', 'admin_toolbar_tools');
+  public static $modules = array(
+    'toolbar',
+    'admin_toolbar',
+    'admin_toolbar_tools'
+  );
 
   protected function setUp() {
     parent::setUp();
 
     // Create an administrative user and log it in.
-    $this->adminUser = $this->drupalCreateUser(array('access toolbar', 'access administration pages'));
+    $this->adminUser = $this->drupalCreateUser(array(
+        'access toolbar',
+        'access administration pages'
+      ));
     $this->drupalLogin($this->adminUser);
   }
 
@@ -44,7 +51,7 @@ class AdminToolbarToolsAlterTest extends WebTestBase {
   function testAdminToolbarTools() {
 
     // Test for admin_toolbar_tools if special menu items are added.
-    $this->assertRaw('class="toolbar-icon toolbar-icon-admin-toolbar-tools-help"');
+    $this->assertRaw('id="toolbar-link-admin_toolbar_tools-flush"');
 
   }
 
