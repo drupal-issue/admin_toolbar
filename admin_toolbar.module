@@ -19,7 +19,7 @@ function admin_toolbar_toolbar_alter(&$items) {
  *
  * @see toolbar_prerender_toolbar_administration_tray()
  */
-function admin_toolbar_prerender_toolbar_administration_tray(array $element) { 
+function admin_toolbar_prerender_toolbar_administration_tray(array $element) {
   $menu_tree = \Drupal::service('toolbar.menu_tree');
   $parameters = new MenuTreeParameters();
   $parameters->setRoot('system.admin')->excludeRoot()->setMaxDepth(4)->onlyEnabledLinks();
@@ -57,7 +57,7 @@ function toolbar_tools_menu_navigation_links(array $tree) {
     $url = $link->getUrlObject();
     if (!$url->isRouted()) {
       // This is an unusual case, so just get a distinct, safe string.
-      $id = substr(Crypt::hashBase64($url->getUri()), 0, 16);
+      $id = substr(\Drupal\Component\Utility\Crypt::hashBase64($url->getUri()), 0, 16);
     }
     else {
       $id = str_replace(array('.', '<', '>'), array('-', '', ''), $url->getRouteName());

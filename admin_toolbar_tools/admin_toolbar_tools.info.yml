@@ -1,6 +1,6 @@
 name: Admin Toolbar Extra Tools
 core: 8.x
-description: Admin Toolbar Extra Tools adds more fonctionalities in the admin menu.
+description: Admin Toolbar Extra Tools adds more functionalities in the admin menu.
 package: Administration
 type: module
 dependencies:
