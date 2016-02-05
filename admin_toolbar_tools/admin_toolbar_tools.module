@@ -73,9 +73,25 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
     'route_name' => 'system.modules_uninstall',
     'parent' => 'system.modules_list',
   );
-  $content_entities = filterContentEntities();
-
-  unset($content_entities['user']);
+  $content_entities = array(
+    "block_content" => array(
+      "content_entity" => "block_content",
+      "config_entity" => "block_content_type"
+    ),
+    "comment" => array(
+      "content_entity" => "comment",
+      "config_entity" => "comment_type"
+    ),
+    "contact" => array(
+      "content_entity" => "contact_message",
+      "config_entity" => "contact_form"
+    ),
+    "node" => array("content_entity" => "node", "config_entity" => "node_type"),
+    "taxonomy" => array(
+      "content_entity" => "taxonomy_term",
+      "config_entity" => "taxonomy_vocabulary"
+    ),
+  );
   // Add  common links to entities.
   // The common links for entities are :
   // - Editing entity, Deleting entity,manage fields for entity
@@ -511,45 +527,6 @@ function  filterFieldsByEntityName($entity_type_id, $bundle_search) {
     }
   }
   return $field_to_filter;
-}
-
-/**
- * Get config & content entity for every module.
- * @return array
- */
-function getAllModulesWithEntities() {
-  $entities_to_filter = array();
-  foreach (\Drupal::entityTypeManager()
-             ->getDefinitions() as $entity_type_id => $entity) {
-    //Get class
-    $class = $entity->getClass();
-    //Get the module which the entity associated
-    $module = explode('\\', $class)[1];
-    if ($entity->get('field_ui_base_route') != NULL) {
-      $entities_to_filter[$module]["content_entity"] = $entity_type_id;
-    }
-    else {
-      $entities_to_filter[$module]["config_entity"] = $entity_type_id;
-    }
-  }
-  return $entities_to_filter;
-}
-
-/**
- * Filter modules with only content entities
- * @return array
- */
-function filterContentEntities() {
-  //All modules
-  $all_modules = getAllModulesWithEntities();
-  //Initialise modules.
-  $filtred_modules = array();
-  foreach ($all_modules as $module_name => $entities) {
-    if (count($entities) == 2) {
-      $filtred_modules[$module_name] = $entities;
-    }
-  }
-  return $filtred_modules;
 }
 
 /**
