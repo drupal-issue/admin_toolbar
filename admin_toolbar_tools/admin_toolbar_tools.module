@@ -153,28 +153,19 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
       }
       $fields = filterFieldsByEntityName($module_name, $machine_name);
       foreach ($fields as $id => $label_bundle) {
-        $links["entity.field_config" . "$content_entity" . "_field_edit_form" . $id] = array(
+        $links["entity.field_config." . "$content_entity" . "_field_edit_form" . $id] = array(
           'title' => $label_bundle,
-          'route_name' => "entity.field_config" . "$content_entity" . "_field_edit_form",
+          'route_name' => "entity.field_config." . "$content_entity" . "_field_edit_form",
           'parent' => "entity.$content_entity.field_ui_fields" . $machine_name,
           'route_parameters' => array(
             $config_entity => $machine_name,
             'field_config' => $id,
           ),
         );
-        $links["entity.field_config" . "$content_entity" . "_field__edit_form" . $id] = array(
-          'title' => "Edit",
-          'route_name' => "entity.field_config" . "$content_entity" . "_field__edit_form",
-          'parent' => "entity.field_config" . "$content_entity" . "_field_edit_form" . $id,
-          'route_parameters' => array(
-            $config_entity => $machine_name,
-            'field_config' => $id,
-          ),
-        );
-        $links["entity.field_config" . "$content_entity" . "_field_delete_form" . $id] = array(
+        $links["entity.field_config." . "$content_entity" . "_field_delete_form" . $id] = array(
           'title' => "Delete",
-          'route_name' => "entity.field_config" . "$content_entity" . "_field_delete_form",
-          'parent' => "entity.field_config" . "$content_entity" . "_field_edit_form" . $id,
+          'route_name' => "entity.field_config." . "$content_entity" . "_field_delete_form",
+          'parent' => "entity.field_config." . "$content_entity" . "_field_edit_form" . $id,
           'route_parameters' => array(
             $config_entity => $machine_name,
             'field_config' => $id,
@@ -183,7 +174,7 @@ function admin_toolbar_tools_menu_links_discovered_alter(&$links) {
         $links["entity.field_config." . $content_entity . "_storage_edit_form" . $id] = array(
           'title' => "Storage settings",
           'route_name' => "entity.field_config." . $content_entity . "_storage_edit_form",
-          'parent' => "entity.field_config" . "$content_entity" . "_field_edit_form" . $id,
+          'parent' => "entity.field_config." . "$content_entity" . "_field_edit_form" . $id,
           'route_parameters' => array(
             $config_entity => $machine_name,
             'field_config' => $id,
